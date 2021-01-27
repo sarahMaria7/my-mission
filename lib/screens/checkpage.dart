@@ -78,7 +78,8 @@ class _CheckPageState extends State<CheckPage> {
                   child: Text('ارسال', 
                   style: new TextStyle(
                         fontSize: 19.0,
-                        color: Color(0xffFFFFFF),
+                        color: Color(0xffFFFFFF), 
+                        fontFamily: "AlJazeera", 
                         fontWeight: FontWeight.bold,
                         backgroundColor: Colors.white12),
                   ), 
@@ -86,6 +87,7 @@ class _CheckPageState extends State<CheckPage> {
                   ), 
                    
                 ),
+              SizedBox(height: 50.0), 
               
             ],
           ),
