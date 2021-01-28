@@ -89,6 +89,7 @@ class _CheckPageState extends State<CheckPage> {
                 ),
               SizedBox(height: 50.0), 
               
+          
             ],
           ),
         ),

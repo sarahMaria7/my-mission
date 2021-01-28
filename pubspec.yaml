@@ -78,6 +78,15 @@ flutter:
   fonts:
     - family: AlJazeera
       fonts:
-        - asset: assets/fonts/ArbFONTS-Al-Jazeera-Arabic-Regular.ttf 
+        - asset: assets/fonts/ArbFONTS-Al-Jazeera-Arabic-Regular.ttf  
+    - family: Corbel
+      fonts:
+        - asset: assets/fonts/Corbel Bold.ttf 
+    - family: Arial
+      fonts:
+        - asset: assets/fonts/Arial.ttf 
+    - family: Aqua
+      fonts:
+        - asset: assets/fonts/aqua.ttf    
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

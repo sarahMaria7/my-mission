@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
       title: 'mymission',
       theme: ThemeData(
         primarySwatch: Colors.green,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        visualDensity: VisualDensity.adaptivePlatformDensity, 
+        fontFamily: "AlJazeera", 
       ),
       home: CheckPage(),
     );
