@@ -20,7 +20,7 @@ class _CheckPageState extends State<CheckPage> {
         elevation: 0.0,
         title: Text(''),
       ),
-      body: Center(
+      body: Center( 
         child: Padding(
           padding: EdgeInsets.all(15.0), 
         child: SingleChildScrollView(
@@ -35,12 +35,12 @@ class _CheckPageState extends State<CheckPage> {
               Padding( 
                 padding: EdgeInsets.all(5.0), 
               child: Container( 
-                height: 55.0, 
+                height: 45.0, 
                 width: 250,   
                 margin: EdgeInsets.only(top: 5.0, bottom: 5.0), 
                 child: TextField(
                   textDirection: TextDirection.rtl,
-                  textAlign: TextAlign.center, 
+                  textAlign: TextAlign.center,  
                   controller: _checkNum,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
@@ -67,7 +67,7 @@ class _CheckPageState extends State<CheckPage> {
                           ),
                     ),
                     hintText: (' رمز التأكيد '),
-                    hintStyle: TextStyle(
+                    hintStyle: TextStyle( 
                         fontSize: 19.0,
                         fontWeight: FontWeight.bold,
                         color: Color(0x80000000)),
@@ -98,7 +98,7 @@ class _CheckPageState extends State<CheckPage> {
                   ), 
          ),     
                 
-              SizedBox(height: 62.0), 
+              SizedBox(height: 82.0), 
             Text("BY \n TG Developers", 
             textAlign: TextAlign.center,  
             style: new TextStyle(
