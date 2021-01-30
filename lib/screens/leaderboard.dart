@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart'; 
 
 
@@ -17,22 +18,46 @@ class _LeaderBoardState extends State<LeaderBoard> {
       length: 2, 
     child: Scaffold(
       appBar: AppBar( 
+         shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomRight: Radius.circular(95.0),
+         bottomLeft: Radius.circular(95.0)
+         )), 
          leading: new IconButton(
               icon: new Icon(Icons.arrow_back, color: Color(0xff000000)), 
                    onPressed: () {}), 
-        backgroundColor: Colors.grey, 
+        backgroundColor: Color(0xffEBEBEB), 
         elevation: 0.0,
             title: Text(''),
             automaticallyImplyLeading: false, 
-            bottom: TabBar(
-              indicatorColor: Colors.green, 
-              indicatorWeight: 5.0,  
+            bottom:  PreferredSize(
+            preferredSize: new Size(100.0, 75.0),
+            child: new Container(
+              width: 350.0,
+            child: TabBar( 
+              labelStyle: TextStyle(
+                fontSize: 25.0, 
+              ), 
+              indicatorColor: Colors.transparent, 
+               labelColor: Color(0xff000000), 
+               unselectedLabelColor: Color(0x80000000),  
+               indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(75), 
+                color: Color(0xffF4C852), 
+                
+                               ),
               tabs: [ 
-                Tab(text: 'الكبسولات'), 
-                Tab(text: 'نقاط التحدي'),  
-              ],
+                 new Container(
+                    height: 70.0,
+                child: Tab(text: 'الكبسولات'), 
+                 ), 
+                  new Container(
+                    height: 70.0,  
+                child: Tab(text: 'نقاط التحدي'), 
+                  ),   
+              ], 
+              
             ),
-          
+            ), 
+            ), 
       ),
       body: TabBarView(
             children: [
@@ -43,9 +68,12 @@ class _LeaderBoardState extends State<LeaderBoard> {
                 crossAxisAlignment: CrossAxisAlignment.start,  
                     children: <Widget>[ 
             CircleAvatar(
-                radius: 15.0,
-             
+                radius: 15.0, 
+                backgroundColor: Colors.white, 
+             child: Text('1',  
+               style: TextStyle(fontSize: 25, color: Color(0x80000000)),
               ), 
+            ),  
                     ]
               ),
             ], 
