@@ -11,7 +11,7 @@ class LeaderBoard extends StatefulWidget {
 } 
 
 class _LeaderBoardState extends State<LeaderBoard> {
-
+int loadPrs = 0;  
   @override
   Widget build(BuildContext context) {
     return DefaultTabController( 
@@ -29,7 +29,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
             title: Text(''),
             automaticallyImplyLeading: false, 
             bottom:  PreferredSize(
-            preferredSize: new Size(52.0, 55.0),
+            preferredSize: new Size(100.0, 55.0),
             child: new Container( 
               padding: EdgeInsets.only(bottom: 15.0, right: 15.0, left: 15.0), 
              
@@ -39,56 +39,44 @@ class _LeaderBoardState extends State<LeaderBoard> {
               ), 
               indicatorColor: Colors.transparent, 
                labelColor: Color(0x80000000), 
-               unselectedLabelColor: Color(0xff000000),  
+               unselectedLabelColor: Color(0xff000000), 
+                
                
+            indicator: BoxDecoration( 
+              image: DecorationImage(image:AssetImage(
+                    'assets/images/pressed.png', 
+                  ),), 
+                //borderRadius: BorderRadius.circular(55), 
+                //color: Color(0xffEBEBEB), 
+               //boxShadow: [
+            //BoxShadow(
+                //color: Colors.black, 
+                //blurRadius: 5.0,
+                //spreadRadius: 0.0,
+                //offset: Offset(5.0, 5.0), // shadow direction: bottom right
+           // )
+        //],
+                               ), 
               tabs: [ 
             
           
                  
              Tab(  
                child: Container( 
-                 //width: 200.0, 
-                decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(65), 
-                color: Color(0xffEBEBEB), 
-               boxShadow: [
-            BoxShadow(
-                color: Colors.black87, 
-                blurRadius: 5.0,
-                spreadRadius: 0.0,
-                offset: Offset(5.0, 5.0), // shadow direction: bottom right
-            )
-        ],
-                               ), 
-                           
-                               child: Align( 
-                                 alignment: Alignment.center, 
+                  
+              
                                  child: Text('الكبسولات'),
                                ), 
                ),
-             ), 
+              
                
                 Tab(
                     child: Container( 
-             
-                 //width: 180.0, 
-                decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(65), 
-                color: Color(0xffEBEBEB), 
-               boxShadow: [
-            BoxShadow(
-                color: Colors.black87, 
-                blurRadius: 5.0,
-                spreadRadius: 0.0,
-                offset: Offset(5.0, 5.0), // shadow direction: bottom right
-            )
-        ],
-                               ), 
+            
                            
-                               child: Align( 
-                                 alignment: Alignment.center, 
+                        
                                  child: Text('نقاط التحدي'),
-                               ), 
+                         
                ),
                 ), 
              
