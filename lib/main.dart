@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/checkpage.dart';
-import 'screens/leaderBoard.dart';
+import 'screens/leaderboard.dart'; 
+
 void main() {
   runApp(MyApp());
 }
@@ -13,11 +14,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false, 
       title: 'mymission',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.green, 
         visualDensity: VisualDensity.adaptivePlatformDensity, 
         fontFamily: "AlJazeera", 
       ),
-      home: LeaderBoard(),
+      home: LeaderBoard(),  
     );
   }
 }
