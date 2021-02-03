@@ -13,8 +13,21 @@ class LeaderBoard extends StatefulWidget {
   _LeaderBoardState createState() => _LeaderBoardState();
 }
 
-class _LeaderBoardState extends State<LeaderBoard> {
+class _LeaderBoardState extends State<LeaderBoard>
+    with TickerProviderStateMixin {
   List<Chat> items = List.of(Data.chats);
+  TabController _controller;
+  List<bool> isInLeaderBoard;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TabController(vsync: this, length: 2);
+    isInLeaderBoard = List<bool>.filled(items.length, false);
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -37,36 +50,71 @@ class _LeaderBoardState extends State<LeaderBoard> {
             child: new Container(
               padding: EdgeInsets.only(bottom: 15.0, right: 15.0, left: 15.0),
               child: TabBar(
-                labelStyle: TextStyle(
-                  fontSize: 19.0,
-                ),
-                indicatorColor: Colors.transparent,
-                labelColor: Color(0xff000000),
-                unselectedLabelColor: Color(0x80000000),
+                indicatorPadding: EdgeInsets.only(right: 15.0),
                 indicator: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(
                       'assets/images/pressed.png',
                     ),
+                    fit: BoxFit.cover,
                   ),
                 ),
+                controller: _controller,
+                labelStyle: TextStyle(
+                  fontSize: 19.0,
+                  fontWeight: FontWeight.bold,
+                ),
+                indicatorColor: Colors.transparent,
+                labelColor: Color(0xff000000),
                 tabs: [
                   Tab(
-                    child: Container(
-                      child: Text('الكبسولات'),
-                    ),
+                    child: _controller.index == 1
+                        ? Container(
+                            padding: EdgeInsets.only(right: 12),
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: Text('الكبسولات')),
+                            height: 90,
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image:
+                                    AssetImage('assets/images/nopressed.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                        : Center(child: Text('الكبسولات')),
                   ),
                   Tab(
-                    child: Container(
-                      child: Text('نقاط التحدي'),
-                    ),
+                    child: _controller.index == 0
+                        ? Container(
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: Text('نقاط التحدي')),
+                            height: 90,
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image:
+                                    AssetImage('assets/images/nopressed.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                        : Center(child: Text('نقاط التحدي')),
                   ),
                 ],
+                onTap: (val) {
+                  print(_controller.index);
+                  setState(() {});
+                },
               ),
             ),
           ),
         ),
         body: TabBarView(
+          controller: _controller,
           children: [
             Center(
               child: Column(
@@ -96,10 +144,10 @@ class _LeaderBoardState extends State<LeaderBoard> {
               separatorBuilder: (context, index) =>
                   Divider(thickness: 2.0, color: Color(0xffEBEBEB)),
               itemBuilder: (context, index) {
-                final item = items[index];
-
+                final item = items[index]; 
+                bool valLeaderboard = isInLeaderBoard[index];
                 return SlidableWidget(
-                  child: buildListTile(item),
+                  child: buildListTile(item, valLeaderboard),
                   onDismissed: (action) =>
                       dismissSlidableItem(context, index, action),
                 );
@@ -126,35 +174,40 @@ class _LeaderBoardState extends State<LeaderBoard> {
         break;
     }
   }
-
-  Widget buildListTile(Chat item) => ListTile(
+  
+  Widget buildListTile(Chat item, bool valLeaderboard) => ListTile(
         contentPadding: EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 16,
         ),
-        leading: CircleAvatar(
-          radius: 30.0,
-          backgroundColor: Colors.white,
-          child: Text(
-            '150',
-            style: TextStyle(fontSize: 20, color: Color(0x80000000)),
-          ),
-        ), 
+      leading: buildCheckBox(valLeaderboard), 
         title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, 
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Row(
                 //crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                 
+                  CircleAvatar(
+                    radius: 30.0,
+                    backgroundColor: Colors.white,
+                    child: Text(
+                      '150',
+                      style: TextStyle(fontSize: 20, color: Color(0x80000000)),
+                    ),
+                  ),
                   Text(
                     item.username,
-                    style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
-                  ), 
-                  
+                    style:
+                        TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+                  ),
+                  Spacer(),
+                  Spacer(),
                   CircleAvatar(
                     radius: 28,
                     backgroundImage: NetworkImage(item.urlAvatar),
                   ),
+                  Spacer(),
                   CircleAvatar(
                     radius: 30.0,
                     backgroundColor: Colors.white,
@@ -168,5 +221,24 @@ class _LeaderBoardState extends State<LeaderBoard> {
         ),
         // هنا ننادي على حساب البطل في الانستغرام
         onTap: () {},
-      );
+      ); 
+      Widget buildCheckBox(bool leaderboard) => Checkbox( 
+    
+
+                      value: leaderboard, 
+                      onChanged: (bool newValue) { 
+                        setState(
+                          () {
+                            leaderboard = newValue;
+                           //  اذا كانت التشيك بوكس كليكد نضيفه الى قائمة المتصدرين
+                            if (leaderboard == true) {
+                              // Here goes your functionality that add the user in list leaderboard
+                              print('is clicked'); 
+                            } 
+                          },
+                        );
+                      },
+                      activeColor: Colors.blue, 
+                      checkColor: Colors.blue, 
+  ); 
 }
