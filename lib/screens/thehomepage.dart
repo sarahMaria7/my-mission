@@ -76,9 +76,8 @@ class _TheHomePageState extends State<TheHomePage> {
       ), 
 
       
-  body: Container( 
-       padding: EdgeInsets.all(15.0), 
-  child: ListView(
+  body: ListView( 
+    padding: EdgeInsets.all(9.0), 
     scrollDirection: Axis.vertical, 
     children: <Widget>[ 
       GestureDetector(
@@ -86,7 +85,7 @@ class _TheHomePageState extends State<TheHomePage> {
                         _showPicker(context);
                       },
                       child: Align(
-                        alignment: Alignment(0.3, 0.2),
+                        alignment: Alignment(-0.3, 0.2),
                         child: CircleAvatar(
                           backgroundColor: Colors.transparent, 
                           child: new IconButton(
@@ -104,7 +103,7 @@ class _TheHomePageState extends State<TheHomePage> {
                       alignment: Alignment.center,
                       child: CircleAvatar(
                         backgroundColor: Colors.transparent,
-                        radius: 95,
+                        radius: 75,
                         child: _image == null
                             ? ClipRRect(
                                 borderRadius: BorderRadius.circular(50),
@@ -133,18 +132,109 @@ class _TheHomePageState extends State<TheHomePage> {
             style: new TextStyle(
                         fontSize: 25.0, 
                         color: Color(0xff000000), 
+                        fontWeight: FontWeight.bold, 
                         ), 
             ),  
-          SizedBox(height: 25.0), 
+          SizedBox(height: 35.0), 
           Row(
             children: <Widget>[ 
-
+              SizedBox(width: 19.0),  
+              Column( 
+                         children: <Widget>[ 
+           GestureDetector(
+                      onTap: () {
+                      print('ce ceci est un essaie'); 
+                      }, 
+              child: Container( 
+                height: 95.0, 
+                width: 95.0,  
+                         decoration: BoxDecoration(
+             image: DecorationImage(
+               image: AssetImage('assets/images/leaderboard.png'), 
+               fit: BoxFit.fill,  
+             ), 
+           ),  
+              ), 
+           ),  
+           Text('المتصدرين', 
+            textAlign: TextAlign.center,  
+            style: new TextStyle(
+                        fontSize: 19.0, 
+                        color: Color(0xff000000), 
+                        fontWeight: FontWeight.bold, 
+                        ), 
+           
+           ),   
+               
+                         ], 
+              ), 
+              SizedBox(width: 12.0),  
+              Column( 
+                         children: <Widget>[ 
+           GestureDetector(
+                      onTap: () {
+                      print('ce ceci est un essaie'); 
+                      }, 
+              child: Container( 
+                height: 95.0, 
+                width: 95.0,  
+                         decoration: BoxDecoration(
+             image: DecorationImage(
+               image: AssetImage('assets/images/chanllenges.png'), 
+               fit: BoxFit.fill,  
+             ), 
+           ),  
+              ), 
+           ),  
+           Text('التحدي', 
+            textAlign: TextAlign.center,  
+            style: new TextStyle(
+                        fontSize: 19.0, 
+                        color: Color(0xff000000), 
+                        fontWeight: FontWeight.bold, 
+                        ), 
+           
+           )  
+               
+                         ], 
+              ), 
+          SizedBox(width: 12.0), 
+                Column( 
+                         children: <Widget>[ 
+           GestureDetector(
+                      onTap: () {
+                      print('ce ceci est un essaie'); 
+                      }, 
+              child: Container( 
+                height: 95.0, 
+                width: 95.0,  
+                         decoration: BoxDecoration(
+             image: DecorationImage(
+               image: AssetImage('assets/images/capsule.png'), 
+               fit: BoxFit.fill,  
+             ), 
+           ),  
+              ), 
+           ),  
+           Text('الكبسولات', 
+            textAlign: TextAlign.center,  
+            style: new TextStyle(
+                        fontSize: 19.0, 
+                        color: Color(0xff000000), 
+                        fontWeight: FontWeight.bold, 
+                        ), 
+           
+           )  
+               
+                         ], 
+              ),  
             ], 
           ), 
+          SizedBox(height: 35.0),  
       Container( 
            //width: MeiaQuery.of(context).size.width, 
            height: 65.0, 
-           width: 65.0, 
+           width: 119.0, 
            decoration: BoxDecoration(
              image: DecorationImage(
                image: AssetImage(loadPrs? 'assets/images/exitpressed.png': 'assets/images/exitnopressed.png'), 
@@ -182,7 +272,7 @@ class _TheHomePageState extends State<TheHomePage> {
     ], 
   )
 
-  ), 
+ 
       );  
     } 
 } 
