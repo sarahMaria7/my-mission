@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'screens/checkpage.dart';
+//import 'screens/checkpage.dart';
 import 'screens/leaderboard.dart'; 
+
+import 'screens/thehomepage.dart'; 
 
 void main() {
   runApp(MyApp());
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity, 
         fontFamily: "AlJazeera", 
       ),
-      home: LeaderBoard(),  
+      home: TheHomePage(),   
     );
   }
 }
