@@ -122,85 +122,94 @@ Widget _createSearchView(){
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(35.0),
-                  bottomLeft: Radius.circular(35.0))),
-          leading: new IconButton(
-              icon: new Icon(Icons.arrow_back, color: Color(0xff000000)),
-              onPressed: () {}),
-          backgroundColor: Color(0xffEBEBEB),
-          elevation: 0.0,
-          title: Text(''),
-          automaticallyImplyLeading: false,
-          bottom: PreferredSize(
-            preferredSize: new Size(100.0, 43.0),
-            child: new Container(
-              padding: EdgeInsets.only(bottom: 15.0, right: 15.0, left: 15.0),
-              child: TabBar(
-                indicatorPadding: EdgeInsets.only(right: 15.0),
-                indicator: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      'assets/images/pressed.png',
-                    ), 
-                    fit: BoxFit.fill, 
+        appBar:  PreferredSize(
+              preferredSize: Size.fromHeight(115),
+              child: Theme(
+                data: ThemeData(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+              ), 
+          child: AppBar(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(35.0),
+                    bottomLeft: Radius.circular(35.0))),
+            leading: new IconButton(
+                icon: new Icon(Icons.arrow_back, color: Color(0xff000000)),
+                onPressed: () {}),
+            backgroundColor: Color(0xffEBEBEB),
+            elevation: 0.0,
+            title: Text(''),
+            automaticallyImplyLeading: false,
+            bottom: PreferredSize(
+              preferredSize: new Size(100.0, 155.0),
+              child: new Container(
+                padding: EdgeInsets.only(bottom: 15.0, right: 15.0, left: 15.0),
+                child: TabBar( 
+                  indicatorColor: Colors.transparent, 
+                  indicatorPadding: EdgeInsets.only(right: 15.0),
+                  indicator: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'assets/images/pressed.png',
+                      ), 
+                      fit: BoxFit.fill, 
+                    ),
                   ),
-                ),
-                controller: _controller,
-                labelStyle: TextStyle(
-                  fontSize: 19.0,
-                  fontWeight: FontWeight.bold,
-                ),
-                indicatorColor: Colors.transparent,
-                labelColor: Color(0xff000000),
-                tabs: [
-                  Tab(
-                    child: _controller.index == 1
-                        ? Container(
-                            padding: EdgeInsets.only(right: 12),
-                            child: Align(
-                                alignment: Alignment.center,
-                                child: Text('الكبسولات')),
-                            height: 90,
-                            width: MediaQuery.of(context).size.width * 0.5, 
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image:
-                                    AssetImage('assets/images/nopressed.png'),
-                                fit: BoxFit.cover, 
+                  controller: _controller,
+                  labelStyle: TextStyle(
+                    fontSize: 19.0,
+                    fontWeight: FontWeight.bold,
+                  ), 
+                  labelColor: Color(0xff000000),
+                  tabs: [
+                    Tab(
+                      child: _controller.index == 1
+                          ? Container(
+                              padding: EdgeInsets.only(right: 12),
+                              child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text('الكبسولات')),
+                              height: 90,
+                              width: MediaQuery.of(context).size.width * 0.5, 
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image:
+                                      AssetImage('assets/images/nopressed.png'),
+                                  fit: BoxFit.cover, 
+                                ),
                               ),
-                            ),
-                          )
-                        : Center(child: Text('الكبسولات')),
-                  ),
-                  Tab(
-                    child: _controller.index == 0
-                        ? Container(
-                            child: Align(
-                                alignment: Alignment.center,
-                                child: Text('نقاط التحدي')),
-                            height: 90,
-                            width: MediaQuery.of(context).size.width * 0.5, 
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image:
-                                    AssetImage('assets/images/nopressed.png'),
-                                fit: BoxFit.cover,
+                            )
+                          : Center(child: Text('الكبسولات')),
+                    ),
+                    Tab(
+                      child: _controller.index == 0
+                          ? Container(
+                              child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text('نقاط التحدي')),
+                              height: 90,
+                              width: MediaQuery.of(context).size.width * 0.5, 
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image:
+                                      AssetImage('assets/images/nopressed.png'),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                          )
-                        : Center(child: Text('نقاط التحدي')),
-                  ),
-                ],
-                onTap: (val) {
-                  //print(_controller.index);
-                  setState(() {});
-                },
+                            )
+                          : Center(child: Text('نقاط التحدي')),
+                    ),
+                  ],
+                  onTap: (val) {
+                    //print(_controller.index);
+                    setState(() {});
+                  },
+                ),
               ),
             ),
           ),
+        ), 
         ), 
    // /////////////////////////////// body     
         body: TabBarView(
@@ -278,14 +287,22 @@ void dismissSlidableItem(
                 //crossAxisAlignment: CrossAxisAlignment.end, 
                 children: <Widget>[
             buildCheckBox(index), 
-                  CircleAvatar(
-                    radius: 25.0,
+            Spacer(), 
+            Container( 
+              padding: const EdgeInsets.all(2.0), // borde width
+  decoration: new BoxDecoration(
+    color: const Color(0xffEBEBEB), // border color
+    shape: BoxShape.circle),  
+                  child: CircleAvatar(
+                    radius: 23.0,
                     backgroundColor: Colors.white,
                     child: Text(
                       '150',
                       style: TextStyle(fontSize: 19, color: Color(0x80000000)),
                     ),
-                  ),
+                  ), 
+            ),  
+                  Spacer(), 
                   Text(    item.username, 
                 textAlign: TextAlign.right, 
                 
@@ -294,19 +311,27 @@ void dismissSlidableItem(
                   ),
                   Spacer(),
                 
+                
                   CircleAvatar(
                     radius: 28,
                     backgroundImage: NetworkImage(item.urlAvatar),
-                  ),
-                  Spacer(),
-                  CircleAvatar(
-                    radius: 23.0,
+                  ), 
+            
+                  Spacer(), 
+                  Container( 
+              padding: const EdgeInsets.all(2.0), // borde width
+  decoration: new BoxDecoration(
+    color: const Color(0xffEBEBEB), // border color
+    shape: BoxShape.circle), 
+                  child: CircleAvatar(
+                    radius: 15.0,
                     backgroundColor: Colors.white,
                     child: Text(
                       '1',
                       style: TextStyle(fontSize: 17, color: Color(0x80000000)),
                     ),
-                  ),
+                  ), 
+                  ), 
                 ]),
           ],
         ),
@@ -322,7 +347,7 @@ void dismissSlidableItem(
         child: Container(
           decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(9.0),
             child: isInLeaderBoard[index]
                 ? Icon(
                     Icons.check,

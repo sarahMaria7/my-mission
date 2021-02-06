@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity, 
         fontFamily: "AlJazeera", 
       ),
-      home: TheHomePage(),   
+      home: LeaderBoard(),  
     );
   }
 }
