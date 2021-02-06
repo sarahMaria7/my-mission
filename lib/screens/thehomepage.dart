@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart'; 
-import 'package:image_picker/image_picker.dart'; 
-import 'dart:io'; 
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart'; 
+//import 'dart:io'; 
 
 
 class TheHomePage extends StatefulWidget {
@@ -13,22 +13,24 @@ class TheHomePage extends StatefulWidget {
 
 
 class _TheHomePageState extends State<TheHomePage> { 
-  File _image; 
-  bool loadPrs = false;   
-   _imgFromCamera() async {
-    File image = await ImagePicker.pickImage(
-        source: ImageSource.camera, imageQuality: 50);
+  //File _image; 
+  //Image _image; 
+  String urlavatar = ''; 
+  bool loadPrs = false; 
+
+  _imgFromGirl()  {
+     String urlavatar1 =  'assets/imageavatar/heroine.jpg'; 
+  
 
     setState(() {
-      _image = image;
+      urlavatar = urlavatar1; 
     });
   } 
-   _imgFromGallery() async {
-    File image = await ImagePicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 50);
+   _imgFromBoy() {
+    String urlavatar2 = 'assets/imageavatar/hero.jpg'; 
 
     setState(() {
-      _image = image;
+      urlavatar = urlavatar2; 
     });
   } 
    //function to choose what we need to do add by camera or bay gallery 
@@ -42,17 +44,17 @@ class _TheHomePageState extends State<TheHomePage> {
               child: new Wrap(
                 children: <Widget>[
                   new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('اضافة من المجلد'),
+                      leading: new Icon(MdiIcons.genderMale), 
+                      title: new Text(''),
                       onTap: () {
-                        _imgFromGallery();
-                        Navigator.of(context).pop();
+                        _imgFromBoy();
+                        Navigator.of(context).pop(); 
                       }), 
                       new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('اخذ صورة'),
+                    leading: new Icon(MdiIcons.genderFemale), 
+                    title: new Text(''),
                     onTap: () {
-                      _imgFromCamera();
+                      _imgFromGirl();
                       Navigator.of(context).pop();
                     },
                   ),
@@ -76,56 +78,55 @@ class _TheHomePageState extends State<TheHomePage> {
       ), 
 
       
+       
   body: ListView( 
     padding: EdgeInsets.all(9.0), 
     scrollDirection: Axis.vertical, 
     children: <Widget>[ 
-      GestureDetector(
-                      onTap: () {
-                        _showPicker(context);
-                      },
-                      child: Align(
-                        alignment: Alignment(-0.3, 0.2),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.transparent, 
-                          child: new IconButton(
-                            icon: new Icon(Icons.add_a_photo,
-                                color: Colors.black),
-                            color: Color(0xffFFFFFF),
+      Align( 
+        alignment: Alignment.center, 
+       child: Stack(
+            children: <Widget>[
+              CircleAvatar(
+                radius: 75, 
+            backgroundColor: Colors.transparent,  
+                child:  urlavatar == ''?
+                ClipOval(child: Image.asset('assets/images/imageprofile.png', height: 150, width: 150, fit: BoxFit.cover,),): 
+                ClipOval(child: Container( height: 150, width: 150, 
+                 decoration: BoxDecoration( 
+                   image: DecorationImage(
+                 image: AssetImage(urlavatar), 
+                 fit: BoxFit.cover, 
+                   ), 
+                  color: Colors.transparent, 
+                  borderRadius: BorderRadius.all(Radius.circular(75)), 
+                ),
+               ),), 
+              ),
+              Positioned(bottom: 1.0, right: 1.0 ,child: Container(
+                height: 50, width: 50,
+                child: IconButton(icon: Icon(Icons.add_a_photo, color: Colors.black),
+               color: Color(0xffFFFFFF), 
+               iconSize: 32.0, 
                             //   هنا نبرمج الفاكشن الخاصة باضافة صورة عند الضغط على أيقونة الكامرة
                           
-                          onPressed: (){}, 
-                          ), 
-                        ),
-                      ),
-                    ), 
- Align(
-                      alignment: Alignment.center,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        radius: 75,
-                        child: _image == null
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: new Image.asset(
-                                  'assets/images/imageprofile.png',
-                                  //height: 250.0,
-                                  //width: 100.0,
-                                  fit: BoxFit.fill,
-                                ),
-                              )
-                            : ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: Image.file(
-                                  _image,
-                                  //height: 250.0,
-                                  //width: 100.0,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                      ),
-                    ), 
+                          onPressed: (){
+                               _showPicker(context); 
+                          }, 
+                
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.transparent, 
+                  borderRadius: BorderRadius.all(Radius.circular(20))
+                ),
+              ))
+            ],
+          ),
 
+      ), 
+
+
+   
      SizedBox(height: 25.0), 
      Text("اسم البطل", 
             textAlign: TextAlign.center,  
@@ -138,7 +139,7 @@ class _TheHomePageState extends State<TheHomePage> {
           SizedBox(height: 35.0), 
           Row(
             children: <Widget>[ 
-              SizedBox(width: 19.0),  
+              SizedBox(width: 43.0),  
               Column( 
                          children: <Widget>[ 
            GestureDetector(
@@ -146,8 +147,8 @@ class _TheHomePageState extends State<TheHomePage> {
                       print('ce ceci est un essaie'); 
                       }, 
               child: Container( 
-                height: 95.0, 
-                width: 95.0,  
+                height: 83.0, 
+                width: 83.0,  
                          decoration: BoxDecoration(
              image: DecorationImage(
                image: AssetImage('assets/images/leaderboard.png'), 
@@ -176,8 +177,8 @@ class _TheHomePageState extends State<TheHomePage> {
                       print('ce ceci est un essaie'); 
                       }, 
               child: Container( 
-                height: 95.0, 
-                width: 95.0,  
+                height: 83.0, 
+                width: 83.0,  
                          decoration: BoxDecoration(
              image: DecorationImage(
                image: AssetImage('assets/images/chanllenges.png'), 
@@ -206,8 +207,8 @@ class _TheHomePageState extends State<TheHomePage> {
                       print('ce ceci est un essaie'); 
                       }, 
               child: Container( 
-                height: 95.0, 
-                width: 95.0,  
+                height: 83.0, 
+                width: 83.0,  
                          decoration: BoxDecoration(
              image: DecorationImage(
                image: AssetImage('assets/images/capsule.png'), 
@@ -230,7 +231,7 @@ class _TheHomePageState extends State<TheHomePage> {
               ),  
             ], 
           ), 
-          SizedBox(height: 35.0),  
+          SizedBox(height: 55.0),  
       Container( 
            //width: MeiaQuery.of(context).size.width, 
            height: 65.0, 

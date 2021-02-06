@@ -13,35 +13,31 @@ class LeaderBoard extends StatefulWidget {
   _LeaderBoardState createState() => _LeaderBoardState();
 }
 
-
 // ///////////////////////////////////////////////////////////class state
 class _LeaderBoardState extends State<LeaderBoard>
-    with TickerProviderStateMixin { 
-
- // /////////////////////////////// declaration 
+    with TickerProviderStateMixin {
+  // /////////////////////////////// declaration
 
   List<Chat> items = List.of(Data.chats);
   TabController _controller;
   List<bool> isInLeaderBoard;
-  var _searchview = new TextEditingController(); 
-  bool _firstSearch = true; 
+  var _searchview = new TextEditingController();
+  bool _firstSearch = true;
   String _query = "";
-  List<String> _filterList2; 
+  List<String> _filterList2;
 
-
-//      methods used  
+//      methods used
   @override
   void initState() {
     super.initState();
     _controller = TabController(vsync: this, length: 2);
-    isInLeaderBoard = List<bool>.generate(items.length, (int i) => false); 
-   _filterList2 =  new List<String>(); 
-   _filterList2.sort(); //////////////////////// 
+    isInLeaderBoard = List<bool>.generate(items.length, (int i) => false);
+    _filterList2 = new List<String>();
+    _filterList2.sort(); ////////////////////////
+  }
 
-  } 
-
-_LeaderBoardState(){
-  _searchview.addListener(() {
+  _LeaderBoardState() {
+    _searchview.addListener(() {
       if (_searchview.text.isEmpty) {
         setState(() {
           _firstSearch = true;
@@ -53,22 +49,22 @@ _LeaderBoardState(){
           _query = _searchview.text;
         });
       }
-    }); 
-}
+    });
+  }
 
-Widget _createSearchView(){
-    return new  Container(
-   height: 83.0, 
-   width: 325.0, 
+  Widget _createSearchView() {
+    return new Container(
+      height: 83.0,
+      width: 325.0,
       padding: EdgeInsets.all(15.0),
-      child: TextField( 
-          textDirection: TextDirection.rtl, 
-          textAlign: TextAlign.right,  
+      child: TextField(
+        textDirection: TextDirection.rtl,
+        textAlign: TextAlign.right,
         controller: _searchview,
         autocorrect: true,
         decoration: InputDecoration(
-          suffixIcon: new Icon(Icons.search_outlined), 
-            hintText: (' بحث '), 
+          suffixIcon: new Icon(Icons.search_outlined),
+          hintText: (' بحث '),
           hintStyle: TextStyle(color: Colors.grey),
           filled: true,
           fillColor: Colors.white70,
@@ -87,177 +83,170 @@ Widget _createSearchView(){
     );
   }
 
-
-///create list trier 
-  Widget _performSearch() { 
-      //_filterList2 =  new List<String>(); 
+  ///create list trier
+  Widget _performSearch() {
+    //_filterList2 =  new List<String>();
     for (int i = 0; i < items.length; i++) {
-      var item = items[i].username; 
+      var item = items[i].username;
 
       if (item.toLowerCase().contains(_query.toLowerCase())) {
         _filterList2.add(item);
       }
     }
     return _createFilteredListView();
-  } 
- Widget _createFilteredListView() {
+  }
+
+  Widget _createFilteredListView() {
     return new ListView.builder(
-          itemCount: _filterList2.length, 
-          itemBuilder: (BuildContext context, int index) {
-           return new Card(
-              color: Colors.white,
-              elevation: 5.0,
-              child: new Container(
-                margin: EdgeInsets.all(15.0),
-                child: new Text("${_filterList2[index]}"),
-              ),
-            );
-          } 
-          );  
-    
-  } 
+        itemCount: _filterList2.length,
+        itemBuilder: (BuildContext context, int index) {
+          return new Card(
+            color: Colors.white,
+            elevation: 5.0,
+            child: new Container(
+              margin: EdgeInsets.all(15.0),
+              child: new Text("${_filterList2[index]}"),
+            ),
+          );
+        });
+  }
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar:  PreferredSize(
-              preferredSize: Size.fromHeight(115),
-              child: Theme(
-                data: ThemeData(
-                highlightColor: Colors.transparent,
-                splashColor: Colors.transparent,
-              ), 
-          child: AppBar(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(35.0),
-                    bottomLeft: Radius.circular(35.0))),
-            leading: new IconButton(
-                icon: new Icon(Icons.arrow_back, color: Color(0xff000000)),
-                onPressed: () {}),
-            backgroundColor: Color(0xffEBEBEB),
-            elevation: 0.0,
-            title: Text(''),
-            automaticallyImplyLeading: false,
-            bottom: PreferredSize(
-              preferredSize: new Size(100.0, 155.0),
-              child: new Container(
-                padding: EdgeInsets.only(bottom: 15.0, right: 15.0, left: 15.0),
-                child: TabBar( 
-                  indicatorColor: Colors.transparent, 
-                  indicatorPadding: EdgeInsets.only(right: 15.0),
-                  indicator: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                        'assets/images/pressed.png',
-                      ), 
-                      fit: BoxFit.fill, 
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(115),
+          child: Theme(
+            data: ThemeData(
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+            ),
+            child: AppBar(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(35.0),
+                      bottomLeft: Radius.circular(35.0))),
+              leading: new IconButton(
+                  icon: new Icon(Icons.arrow_back, color: Color(0xff000000)),
+                  onPressed: () {}),
+              backgroundColor: Color(0xffEBEBEB),
+              elevation: 0.0,
+              title: Text(''),
+              automaticallyImplyLeading: false,
+              bottom: PreferredSize(
+                preferredSize: new Size(100.0, 155.0),
+                child: new Container(
+                  padding:
+                      EdgeInsets.only(bottom: 15.0, right: 15.0, left: 15.0),
+                  child: TabBar(
+                    indicatorColor: Colors.transparent,
+                    indicatorPadding: EdgeInsets.only(right: 15.0),
+                    indicator: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(
+                          'assets/images/pressed.png',
+                        ),
+                        fit: BoxFit.fill,
+                      ),
                     ),
+                    controller: _controller,
+                    labelStyle: TextStyle(
+                      fontSize: 19.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    labelColor: Color(0xff000000),
+                    tabs: [
+                      Tab(
+                        child: _controller.index == 1
+                            ? Container(
+                                padding: EdgeInsets.only(right: 12),
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text('الكبسولات')),
+                                height: 90,
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/images/nopressed.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              )
+                            : Center(child: Text('الكبسولات')),
+                      ),
+                      Tab(
+                        child: _controller.index == 0
+                            ? Container(
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text('نقاط التحدي')),
+                                height: 90,
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/images/nopressed.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              )
+                            : Center(child: Text('نقاط التحدي')),
+                      ),
+                    ],
+                    onTap: (val) {
+                      //print(_controller.index);
+                      setState(() {});
+                    },
                   ),
-                  controller: _controller,
-                  labelStyle: TextStyle(
-                    fontSize: 19.0,
-                    fontWeight: FontWeight.bold,
-                  ), 
-                  labelColor: Color(0xff000000),
-                  tabs: [
-                    Tab(
-                      child: _controller.index == 1
-                          ? Container(
-                              padding: EdgeInsets.only(right: 12),
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text('الكبسولات')),
-                              height: 90,
-                              width: MediaQuery.of(context).size.width * 0.5, 
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/images/nopressed.png'),
-                                  fit: BoxFit.cover, 
-                                ),
-                              ),
-                            )
-                          : Center(child: Text('الكبسولات')),
-                    ),
-                    Tab(
-                      child: _controller.index == 0
-                          ? Container(
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text('نقاط التحدي')),
-                              height: 90,
-                              width: MediaQuery.of(context).size.width * 0.5, 
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/images/nopressed.png'),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            )
-                          : Center(child: Text('نقاط التحدي')),
-                    ),
-                  ],
-                  onTap: (val) {
-                    //print(_controller.index);
-                    setState(() {});
-                  },
                 ),
               ),
             ),
           ),
-        ), 
-        ), 
-   // /////////////////////////////// body     
+        ),
+        // /////////////////////////////// body
         body: TabBarView(
           controller: _controller,
           children: [
-           // //////////////////////////////// الكبسولات
-         //_createListView(), 
-      _createListView(), 
-
-
+            // //////////////////////////////// الكبسولات
+            //_createListView(),
+            _createListView(),
 
             // نقاط التحدي
-        Column(  
-      children: <Widget>[ 
-
-          _createSearchView(), 
-      new Expanded(
-              //SizedBox(height: 35.0), 
-             //child: _createListView(), 
-          child:  _firstSearch ? _createListView() : _performSearch(), 
-      ), 
-      ],     
-        ), 
-          ], 
-      ), 
-      ), 
+            Column(
+              children: <Widget>[
+                _createSearchView(),
+                new Expanded(
+                  //SizedBox(height: 35.0),
+                  //child: _createListView(),
+                  child: _firstSearch ? _createListView() : _performSearch(),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
-  } 
-  Widget _createListView() { 
- 
-     
-     return  ListView.separated(
-              itemCount: items.length,
-              separatorBuilder: (context, index) =>
-                  Divider(thickness: 2.0, color: Color(0xffEBEBEB)),
-              itemBuilder: (context, index) {
-                final item = items[index]; 
-                return SlidableWidget(
-                  child: buildListTile(item, index),
-                  onDismissed: (action) =>
-                      dismissSlidableItem(context, index, action),
-                );
-              },
-            );              
-                
-}
-  
-void dismissSlidableItem(
+  }
+
+  Widget _createListView() {
+    return ListView.separated(
+      itemCount: items.length,
+      separatorBuilder: (context, index) =>
+          Divider(thickness: 2.0, color: Color(0xffEBEBEB)),
+      itemBuilder: (context, index) {
+        final item = items[index];
+        return SlidableWidget(
+          child: buildListTile(item, index),
+          onDismissed: (action) => dismissSlidableItem(context, index, action),
+        );
+      },
+    );
+  }
+
+  void dismissSlidableItem(
       BuildContext context, int index, SlidableAction action) {
     setState(() {
       items.removeAt(index);
@@ -272,78 +261,80 @@ void dismissSlidableItem(
         break;
     }
   }
-  
+
+// ///////////////////////////////////////////////// widget listtile
   Widget buildListTile(Chat item, index) => ListTile(
         contentPadding: EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 16,
-        ), 
-   
+        ),
+
         title: Column(
           //crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[ 
-
-            Row( 
+          children: <Widget>[
+            Row(
                 //crossAxisAlignment: CrossAxisAlignment.end, 
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween, 
                 children: <Widget>[
-            buildCheckBox(index), 
-            Spacer(), 
-            Container( 
-              padding: const EdgeInsets.all(2.0), // borde width
-  decoration: new BoxDecoration(
-    color: const Color(0xffEBEBEB), // border color
-    shape: BoxShape.circle),  
-                  child: CircleAvatar(
-                    radius: 23.0,
-                    backgroundColor: Colors.white,
-                    child: Text(
-                      '150',
-                      style: TextStyle(fontSize: 19, color: Color(0x80000000)),
+                  buildCheckBox(index),
+                  Spacer(),
+                  Container(
+                    padding: const EdgeInsets.all(2.0), // borde width
+                    decoration: new BoxDecoration(
+                        color: const Color(0xffEBEBEB), // border color
+                        shape: BoxShape.circle),
+                    child: CircleAvatar(
+                      radius: 23.0,
+                      backgroundColor: Colors.white,
+                      child: Text(
+                        '150',
+                        style:
+                            TextStyle(fontSize: 19, color: Color(0x80000000)),
+                      ),
                     ),
-                  ), 
-            ),  
-                  Spacer(), 
-                  Text(    item.username, 
-                textAlign: TextAlign.right, 
-                
+                  ),
+                  Spacer(),
+                  Text(
+                    item.username,
+                    textAlign: TextAlign.right,
                     style:
                         TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
-                
-                
                   CircleAvatar(
                     radius: 28,
                     backgroundImage: NetworkImage(item.urlAvatar),
-                  ), 
-            
-                  Spacer(), 
-                  Container( 
-              padding: const EdgeInsets.all(2.0), // borde width
-  decoration: new BoxDecoration(
-    color: const Color(0xffEBEBEB), // border color
-    shape: BoxShape.circle), 
-                  child: CircleAvatar(
-                    radius: 15.0,
-                    backgroundColor: Colors.white,
-                    child: Text(
-                      '1',
-                      style: TextStyle(fontSize: 17, color: Color(0x80000000)),
+                  ),
+                  Spacer(),
+                  Container(
+                    padding: const EdgeInsets.all(2.0), // borde width
+                    decoration: new BoxDecoration(
+                        color: const Color(0xffEBEBEB), // border color
+                        shape: BoxShape.circle),
+                    child: CircleAvatar(
+                      radius: 15.0,
+                      backgroundColor: Colors.white,
+                      child: Text(
+                        '1',
+                        style:
+                            TextStyle(fontSize: 17, color: Color(0x80000000)),
+                      ),
                     ),
-                  ), 
-                  ), 
+                  ),
                 ]),
           ],
         ),
         // هنا ننادي على حساب البطل في الانستغرام
         onTap: () {},
-      ); 
-      Widget buildCheckBox(index) => InkWell( 
-                       onTap: () {
+      );
+
+// ////////////////////////////////// create checkbox
+  Widget buildCheckBox(index) => InkWell(
+        onTap: () {
           setState(() {
-            isInLeaderBoard[index] = !isInLeaderBoard[index];  
+            isInLeaderBoard[index] = !isInLeaderBoard[index];
           });
-        },  
+        },
         child: Container(
           decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
           child: Padding(
@@ -360,8 +351,6 @@ void dismissSlidableItem(
                     color: Colors.blue,
                   ),
           ),
-        ), 
-
-                    
-  ); 
+        ),
+      );
 }
