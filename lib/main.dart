@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 //import 'screens/checkpage.dart';
 import 'screens/leaderboard.dart'; 
+//import 'screens/newCal.dart'; 
+//import 'screens/oldCalendar.dart';
+//import 'screens/thehomepage.dart'; 
+//import 'screens/firstScreen.dart'; 
+//import 'screens/owner.dart'; 
+ //import 'package:http/http.dart' as http; 
+ //import 'dart:convert'; 
+void main() async{ 
 
-import 'screens/thehomepage.dart'; 
+ 
 
-void main() {
-  runApp(MyApp());
+  runApp(MyApp()); 
+
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +28,9 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity, 
         fontFamily: "AlJazeera", 
       ),
-      home: TheHomePage(),  
+      home:  LeaderBoard(), 
     );
   }
 }
+
+
