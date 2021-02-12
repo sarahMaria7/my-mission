@@ -1,12 +1,10 @@
-
-
 import 'package:flutter/material.dart';
 //import 'package:flutter_slidable/flutter_slidable.dart';
-
 import 'package:my_mission/data.dart';
 import 'package:my_mission/models/chat.dart';
 import 'package:my_mission/utils.dart';
 import 'package:my_mission/widget/slidable_widget.dart';
+import 'package:my_mission/controllers/user_controller.dart'; 
 
 class LeaderBoard extends StatefulWidget {
   LeaderBoard({Key key}) : super(key: key);
@@ -19,14 +17,19 @@ class LeaderBoard extends StatefulWidget {
 class _LeaderBoardState extends State<LeaderBoard>
     with TickerProviderStateMixin { 
   // /////////////////////////////// declaration
-
-  List<Chat> items = List.of(Data.chats);
+  
+  List<Chat> items = List.of(Data.chats); 
+  
+  
   TabController _controller;
   List<bool> isInLeaderBoard;
   var _searchview = new TextEditingController();
   bool _firstSearch = true;
   String _query = "";
   List<String> _filterList2;
+  UserController uc = new UserController();  
+
+
 
 //      methods used
   @override
@@ -35,9 +38,12 @@ class _LeaderBoardState extends State<LeaderBoard>
     _controller = TabController(vsync: this, length: 2);
     isInLeaderBoard = List<bool>.generate(items.length, (int i) => false);
     _filterList2 = new List<String>();
-    _filterList2.sort(); ////////////////////////
+    _filterList2.sort(); //////////////////////// 
+ 
   }
 
+
+// construire la barre de recherche 
   _LeaderBoardState() {
     _searchview.addListener(() {
       if (_searchview.text.isEmpty) {
@@ -51,7 +57,8 @@ class _LeaderBoardState extends State<LeaderBoard>
           _query = _searchview.text;
         });
       }
-    });
+    }); 
+
   }
 
   Widget _createSearchView() {
@@ -181,7 +188,8 @@ class _LeaderBoardState extends State<LeaderBoard>
                       ),
                       Tab(
                         child: _controller.index == 0
-                            ? Container(
+                            ? Container( 
+                              padding: EdgeInsets.only(right: 15, left: 15), 
                                 child: Align(
                                     alignment: Alignment.center,
                                     child: Text('نقاط التحدي')),
@@ -214,16 +222,19 @@ class _LeaderBoardState extends State<LeaderBoard>
           children: [
             // //////////////////////////////// الكبسولات
             //_createListView(),
-            _createListView(),
+            _createListView1(),
 
             // نقاط التحدي
             Column(
-              children: <Widget>[
-                _createSearchView(),
+              children: <Widget>[  
+                // appeler la barre de recherche 
+                _createSearchView(), 
+
                 new Expanded(
                   //SizedBox(height: 35.0),
-                  //child: _createListView(),
-                  child: _firstSearch ? _createListView() : _performSearch(),
+                  //child: _createListView(), 
+                  // appeler le widget listview pour construire les points 
+                  child: _firstSearch ? _createListView(uc) : _performSearch(),
                 ),
               ],
             ),
@@ -233,7 +244,32 @@ class _LeaderBoardState extends State<LeaderBoard>
     );
   }
 
-  Widget _createListView() {
+// créer la liste des leaderBoadrs par points 
+  Widget _createListView(UserController uc) { 
+      return  new FutureBuilder( 
+             future: uc.getLeaderBoard(), 
+               builder: (BuildContext context, snapshot){ 
+  if(snapshot.hasData){ 
+                var list = snapshot.data;            
+    return ListView.builder(
+      itemCount: list.length,
+      
+      itemBuilder: (context, index) {
+        //final item = list[index]; 
+        print(list.length); 
+        return SlidableWidget(
+          child: buildListTile(list, index),
+          onDismissed: (action) => dismissSlidableItem(context, index, action, list),
+        );
+      },
+    );
+  } 
+              
+else{return Center(child:CircularProgressIndicator());}  
+ }); 
+    }
+  // créer la liste des leaderboards par capsule 
+ Widget _createListView1() {
     return ListView.separated(
       itemCount: items.length,
       separatorBuilder: (context, index) =>
@@ -241,20 +277,40 @@ class _LeaderBoardState extends State<LeaderBoard>
       itemBuilder: (context, index) {
         final item = items[index];
         return SlidableWidget(
-          child: buildListTile(item, index),
-          onDismissed: (action) => dismissSlidableItem(context, index, action),
+          child: buildListTile1(item, index),
+          onDismissed: (action) => dismissSlidableItem1(context, index, action),
         );
       },
     );
-  }
+  } 
 
-  void dismissSlidableItem(
+
+// supprimer l'utilisateur x par points 
+  void dismissSlidableItem( 
+      BuildContext context, int index, SlidableAction action, item) {
+    setState(() {
+      item.removeAt(index);
+    });
+
+    switch (action) { 
+      case SlidableAction.more:
+        Utils.showSnackBar(context, 'تم توقيف حساب البطل مؤقتا');
+        break;
+      case SlidableAction.delete:
+        Utils.showSnackBar(context, 'تم حذف البطل من قائمة المتصدرين');
+        break;
+    }
+  } 
+
+
+// supprimer l'utilisateur x 
+  void dismissSlidableItem1( 
       BuildContext context, int index, SlidableAction action) {
     setState(() {
       items.removeAt(index);
     });
 
-    switch (action) {
+    switch (action) { 
       case SlidableAction.more:
         Utils.showSnackBar(context, 'تم توقيف حساب البطل مؤقتا');
         break;
@@ -264,8 +320,8 @@ class _LeaderBoardState extends State<LeaderBoard>
     }
   }
 
-// ///////////////////////////////////////////////// widget listtile
-  Widget buildListTile(Chat item, index) => ListTile(
+// ///////////////////////////////////////////////// widget listtile نقاط تحدي 
+  Widget buildListTile(item, index) => ListTile(
         contentPadding: EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 16,
@@ -289,7 +345,7 @@ class _LeaderBoardState extends State<LeaderBoard>
                       radius: 23.0,
                       backgroundColor: Colors.white,
                       child: Text(
-                        '150',
+                        item[index]["score"].toString(), 
                         style:
                             TextStyle(fontSize: 19, color: Color(0x80000000)),
                       ),
@@ -297,7 +353,99 @@ class _LeaderBoardState extends State<LeaderBoard>
                   ),
                   Spacer(),
                   Text(
-                    item.username,
+                    item[index]["display_name"],  
+                    textAlign: TextAlign.right,
+                    style:
+                        TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+                  ),
+                  Spacer(),
+                  CircleAvatar(
+                    radius: 28,
+                    //backgroundImage: NetworkImage(item.urlAvatar),
+                  ),
+                  Spacer(),
+                  Container(
+                    padding: const EdgeInsets.all(2.0), // borde width
+                    decoration: new BoxDecoration(
+                        color: const Color(0xffEBEBEB), // border color
+                        shape: BoxShape.circle),
+                    child: CircleAvatar(
+                      radius: 15.0,
+                      backgroundColor: Colors.white,
+                      child: Text(
+                        (index+1).toString(),  
+                        style:
+                            TextStyle(fontSize: 17, color: Color(0x80000000)),
+                      ),
+                    ),
+                  ),
+                ]),
+          ],
+        ),
+        // هنا ننادي على حساب البطل في الانستغرام
+        onTap: () {},
+      );
+
+// ////////////////////////////////// create checkbox
+  Widget buildCheckBox(index) => InkWell(
+        onTap: () {
+          setState(() {
+            isInLeaderBoard[index] = !isInLeaderBoard[index];
+          });
+        },
+        child: Container(
+          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+          child: Padding(
+            padding: const EdgeInsets.all(9.0),
+            child: isInLeaderBoard[index]
+                ? Icon(
+                    Icons.check,
+                    size: 12.0,
+                    color: Colors.white,
+                  )
+                : Icon(
+                    Icons.check_box_outline_blank,
+                    size: 12.0,
+                    color: Colors.blue,
+                  ),
+          ),
+        ),
+      ); 
+
+// créer une listtile pour la liste de tri par capsule 
+Widget buildListTile1(item, index) => ListTile(
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
+
+        title: Column(
+          //crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+                //crossAxisAlignment: CrossAxisAlignment.end, 
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+                children: <Widget>[
+                  buildCheckBox1(index),
+                  Spacer(),
+                  Container(
+                    padding: const EdgeInsets.all(2.0), // borde width
+                    decoration: new BoxDecoration(
+                        color: const Color(0xffEBEBEB), // border color
+                        shape: BoxShape.circle),
+                    child: CircleAvatar(
+                      radius: 23.0,
+                      backgroundColor: Colors.white,
+                      child: Text(
+                        '150', 
+                        style:
+                            TextStyle(fontSize: 19, color: Color(0x80000000)),
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    item.username, 
                     textAlign: TextAlign.right,
                     style:
                         TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
@@ -330,8 +478,9 @@ class _LeaderBoardState extends State<LeaderBoard>
         onTap: () {},
       );
 
-// ////////////////////////////////// create checkbox
-  Widget buildCheckBox(index) => InkWell(
+
+// le checkbox de la liste de tri par capsule 
+  Widget buildCheckBox1(index) => InkWell(
         onTap: () {
           setState(() {
             isInLeaderBoard[index] = !isInLeaderBoard[index];
@@ -344,20 +493,17 @@ class _LeaderBoardState extends State<LeaderBoard>
             child: isInLeaderBoard[index]
                 ? Icon(
                     Icons.check,
-                    size: 23.0,
+                    size: 12.0,
                     color: Colors.white,
                   )
                 : Icon(
                     Icons.check_box_outline_blank,
-                    size: 23.0,
+                    size: 12.0,
                     color: Colors.blue,
                   ),
           ),
         ),
       ); 
-
-
-
 
 
 }

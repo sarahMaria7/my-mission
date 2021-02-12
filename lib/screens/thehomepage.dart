@@ -17,9 +17,10 @@ class _TheHomePageState extends State<TheHomePage> {
   //Image _image; 
   String urlavatar = ''; 
   bool loadPrs = false; 
-
+  String pictureHeroine = 'heroine.jpg'; 
+  String pictureHero = 'hero.jpg'; 
   _imgFromGirl()  {
-     String urlavatar1 =  'assets/imageavatar/heroine.jpg'; 
+     String urlavatar1 =  'assets/imageavatar/$pictureHeroine'; 
   
 
     setState(() {
@@ -27,7 +28,7 @@ class _TheHomePageState extends State<TheHomePage> {
     });
   } 
    _imgFromBoy() {
-    String urlavatar2 = 'assets/imageavatar/hero.jpg'; 
+    String urlavatar2 = 'assets/imageavatar/$pictureHero'; 
 
     setState(() {
       urlavatar = urlavatar2; 

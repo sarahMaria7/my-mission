@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'screens/leaderboard.dart'; 
 //import 'screens/newCal.dart'; 
 //import 'screens/oldCalendar.dart';
-//import 'screens/thehomepage.dart'; 
+import 'screens/thehomepage.dart'; 
 //import 'screens/firstScreen.dart'; 
 //import 'screens/owner.dart'; 
- //import 'package:http/http.dart' as http; 
- //import 'dart:convert'; 
-void main() async{ 
+//import 'controllers/user_controller.dart'; 
+void main() { 
 
+//UserController uc = new UserController(); 
+//List data = await uc.getLeaderBoard(); 
  
-
+ //print(data); 
   runApp(MyApp()); 
 
 }
@@ -28,9 +29,10 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity, 
         fontFamily: "AlJazeera", 
       ),
-      home:  LeaderBoard(), 
+      home:  LeaderBoard(),  
     );
   }
 }
+
 
 
